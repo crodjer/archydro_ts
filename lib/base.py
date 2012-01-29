@@ -64,6 +64,10 @@ class BaseTimeseries(object):
         return self.data
 
     def get_timeseries(self):
+
+        if self.tseries:
+            return self.tseries
+
         feature_ids = self.get_feature_ids()
         tseries = []
         data = self.get_data()
@@ -71,7 +75,6 @@ class BaseTimeseries(object):
         for feature, feature_data in data:
             feature_id = feature_ids.get(feature, '')
             if feature_id:
-                print feature_id
                 tseries += self._get_feature_tseries(feature_data, feature_id)
             else:
                 self.unprocessed_features.append(feature)
@@ -80,8 +83,7 @@ class BaseTimeseries(object):
         return tseries
 
     def create_timeseries_dbase(self, filename):
-        if self.tseries == None:
-            tseries  = self.get_timeseries
+        tseries = self.get_timeseries()
 
         db = dbf.Dbf(filename, new=True)
         db.addField(

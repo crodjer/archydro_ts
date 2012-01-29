@@ -3,8 +3,6 @@ from time import strptime
 
 from ..lib import xlspreadsheet
 
-NAME = 'IMD Rainfall'
-
 class Timeseries(xlspreadsheet.XLTimeseries):
 
     tseries_type_id = 1
