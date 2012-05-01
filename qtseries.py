@@ -81,6 +81,7 @@ class TimeSeriesGUI(QtGui.QWidget):
                 self.result_label.setText('Successfull!')
             except:
                 self.result_label.setText('Processing Error!')
+                raise
         else:
             self.result_label.setText('Incomplete Info')
 
@@ -90,10 +91,14 @@ class TimeSeriesGUI(QtGui.QWidget):
         combo_label = QtGui.QLabel(self)
         combo_label.setText('Data Processor:')
         combo = QtGui.QComboBox(self)
+        processor_set = False
 
         for processor in self.get_processors():
+            if not processor_set:
+                self.set_processor(processor)
+                processor_set = True
+
             combo.addItem(processor)
-        self.set_processor(processor)
         combo.activated[str].connect(self.set_processor)
         combo.resize(combo.sizeHint())
 
